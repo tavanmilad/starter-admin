@@ -69,6 +69,13 @@
                                 </a>
                             </li>
                             <li class="nav-item">
+                                <a class="nav-link" id="two_factor_authentication_pill" data-bs-toggle="pill"
+                                    href="#two_factor_authentication" aria-expanded="false">
+                                    <i data-feather="link" class="font-medium-3 me-1"></i>
+                                    <span class="fw-bold">{{ __('Otentikasi Dua Faktor') }}</span>
+                                </a>
+                            </li>
+                            <li class="nav-item">
                                 <a class="nav-link" id="delete_account_pill" data-bs-toggle="pill"
                                     href="#delete_account" aria-expanded="false">
                                     <i data-feather="user-x" class="font-medium-3 me-1"></i>
@@ -77,6 +84,7 @@
                             </li>
                         </ul>
                     </div>
+
                     <div class="col-md-9">
                         <div class="card">
                             <div class="card-body">
@@ -238,35 +246,98 @@
                                             </div>
                                         </form>
                                     </div>
-                                    {{-- Delete Account --}}
-                                    <div class="tab-pane fade" id="delete_account" role="tabpanel"
-                                        aria-labelledby="delete_account_pill" aria-expanded="false">
-                                        <form class="form_delete_account" action="{{ url('') }}" method="POST">
-                                            @csrf
-                                            <div class="row">
-                                                <div class="col-12 col-sm-12">
-                                                    <div class="mb-1">
-                                                        <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit.
-                                                            Aperiam, animi nesciunt! Nobis, laborum tenetur. Aperiam illo
-                                                            possimus laudantium incidunt sint porro, earum sapiente eum iure
-                                                            ullam perferendis impedit nesciunt fugit!</p>
-                                                    </div>
-                                                </div>
-                                                <div class="col-12">
-                                                    <button type="submit"
-                                                        class="btn btn-danger me-1 mt-1 btn_delete_account">{{ __('Hapus Akun') }}</button>
+                                    {{-- Two Factor Authentication --}}
+                                    <div class="tab-pane fade" id="two_factor_authentication" role="tabpanel"
+                                        aria-labelledby="two_factor_authentication_pill" aria-expanded="false">
+                                        <div class="row">
+                                            <div class="col-12">
+                                                <div class="d-flex align-items-center mb-2">
+                                                    <i data-feather="link" class="font-medium-3"></i>
+                                                    @if (!auth()->user()->two_factor_secret)
+                                                        <h4 class="mb-0 ms-75 text-danger">
+                                                            {{ __('Anda belum mengaktifkan otentikasi dua faktor.') }}
+                                                        </h4>
+                                                    @else
+                                                        <h4 class="mb-0 ms-75 text-success">
+                                                            {{ __('Anda telah mengaktifkan otentikasi dua faktor.') }}
+                                                        </h4>
+                                                    @endif
                                                 </div>
                                             </div>
-                                        </form>
+                                            <div class="col-12 col-sm-12">
+                                                <div class="mb-1">
+                                                    <p>
+                                                        {{ __('Saat otentikasi dua faktor diaktifkan, Anda akan dimintai token acak yang aman selama otentikasi. Anda dapat mengambil token ini dari aplikasi Google Authenticator di ponsel Anda.') }}
+                                                    </p>
+                                                    @if (session('status') == 'two-factor-authentication-enabled')
+                                                        <p>{{ __('Otentikasi dua faktor telah diaktifkan. Pindai kode QR berikut menggunakan aplikasi autentikator ponsel Anda.') }}
+                                                        </p>
+                                                        {!! auth()->user()->twoFactorQrCodeSvg() !!}
+                                                        <p class="mt-2">
+                                                            {{ __('Simpan kode pemulihan ini. Kode tersebut dapat digunakan untuk memulihkan akses ke akun Anda jika perangkat otentikasi dua faktor Anda hilang.') }}
+                                                        </p>
+                                                        <div class="alert alert-success" role="alert">
+                                                            <div class="alert-body">
+                                                                @foreach(json_decode(decrypt(auth()->user()->two_factor_recovery_codes,true))
+                                                                as $code)
+                                                                <strong>{{ trim($code) }}</strong><br>
+                                                    @endforeach
+                                                </div>
+                                            </div>
+                                            @endif
+                                        </div>
                                     </div>
+                                    @if (!auth()->user()->two_factor_secret)
+                                        <form class="form_two_factor_authentication_enabled"
+                                            action="{{ url('user/two-factor-authentication') }}" method="POST">
+                                            @csrf
+                                            <div class="col-12">
+                                                <button type="submit"
+                                                    class="btn btn-info me-1 mt-1 btn_two_factor_authentication_enabled">Aktifkan</button>
+                                            </div>
+                                        </form>
+                                    @else
+                                        <form class="form_two_factor_authentication_disabled"
+                                            action="{{ url('user/two-factor-authentication') }}" method="POST">
+                                            @csrf
+                                            @method("delete")
+                                            <div class="col-12">
+                                                <button type="submit"
+                                                    class="btn btn-danger me-1 mt-1 btn_two_factor_authentication_disabled">Nonaktifkan</button>
+                                            </div>
+                                        </form>
+                                    @endif
                                 </div>
+                            </div>
+                            {{-- Delete Account --}}
+                            <div class="tab-pane fade" id="delete_account" role="tabpanel"
+                                aria-labelledby="delete_account_pill" aria-expanded="false">
+                                <form class="form_delete_account" action="{{ url('') }}" method="POST">
+                                    @csrf
+                                    <div class="row">
+                                        <div class="col-12 col-sm-12">
+                                            <div class="mb-1">
+                                                <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit.
+                                                    Aperiam, animi nesciunt! Nobis, laborum tenetur. Aperiam illo
+                                                    possimus laudantium incidunt sint porro, earum sapiente eum iure
+                                                    ullam perferendis impedit nesciunt fugit!</p>
+                                            </div>
+                                        </div>
+                                        <div class="col-12">
+                                            <button type="submit"
+                                                class="btn btn-danger me-1 mt-1 btn_delete_account">{{ __('Hapus Akun') }}</button>
+                                        </div>
+                                    </div>
+                                </form>
                             </div>
                         </div>
                     </div>
                 </div>
-            </section>
-
         </div>
+    </div>
+    </section>
+
+    </div>
     </div>
 
 @endsection
