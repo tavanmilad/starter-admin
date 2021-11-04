@@ -58,19 +58,18 @@
                             <form class="auth-login-form mt-2" action="{{ url('login') }}" method="POST">
                                 @csrf
                                 <div class="mb-1">
-                                    <label class="form-label" for="username">Email atau Username</label>
-                                    <input class="form-control @error('username') is-invalid @enderror" id="username"
-                                        type="text" name="username" placeholder="example@mail.com"
-                                        aria-describedby="username" autofocus="" tabindex="1"
-                                        value="{{ old('username') }}" />
-                                    @error('username')
+                                    <label class="form-label" for="email">Email atau Username</label>
+                                    <input class="form-control @error('email') is-invalid @enderror" id="email" type="text"
+                                        name="email" placeholder="example@mail.com" aria-describedby="email" autofocus=""
+                                        tabindex="1" value="{{ old('email') }}" />
+                                    @error('email')
                                         <small class="invalid-feedback">{{ $message }}</small>
                                     @enderror
                                 </div>
                                 <div class="mb-1">
                                     <div class="d-flex justify-content-between">
                                         <label class="form-label" for="password">Password</label>
-                                        <a href="#"><small>Lupa Password?</small></a>
+                                        <a href="{{ url('forgot-password') }}"><small>Lupa Password?</small></a>
                                     </div>
                                     <div class="input-group input-group-merge form-password-toggle">
                                         <input
@@ -82,7 +81,7 @@
                                         </span>
                                     </div>
                                     @error('password')
-                                        <small class="invalid-feedback">{{ $message }}</small>
+                                        <small class="text-danger">{{ $message }}</small>
                                     @enderror
                                 </div>
                                 <div class="mb-1">

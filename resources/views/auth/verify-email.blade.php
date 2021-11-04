@@ -37,7 +37,8 @@
                                             points="69.3922914 32.4202615 32.8435758 70.5039241 58.3683556 20.7402338">
                                         </polygon>
                                         <polygon id="Path-3" fill="url(#linearGradient-2)" opacity="0.099999994"
-                                            points="101.428699 0 83.0667527 94.1480575 130.378721 47.0740288"></polygon>
+                                            points="101.428699 0 83.0667527 94.1480575 130.378721 47.0740288">
+                                        </polygon>
                                     </g>
                                 </g>
                             </g>
@@ -48,13 +49,23 @@
                         <div class="w-100 d-lg-flex align-items-center justify-content-center px-5"><img
                                 class="img-fluid"
                                 src="{{ asset('') }}app-assets/images/pages/forgot-password-v2-dark.svg"
-                                alt="Forgot password V2" /></div>
+                                alt="Verify Email V2" /></div>
                     </div>
                     <div class="d-flex col-lg-4 align-items-center auth-bg px-2 p-lg-5">
                         <div class="col-12 col-sm-8 col-md-6 col-lg-12 px-xl-2 mx-auto">
-                            <h2 class="card-title fw-bold mb-1">Lupa Password? 🔒</h2>
-                            <p class="card-text mb-2">Masukkan email Anda dan kami akan mengirimkan link untuk mengatur
-                                ulang password Anda</p>
+                            <h2 class="card-title fw-bold mb-1">Verifikasi Email</h2>
+                            <p class="card-text mb-2">Hallo,
+                                <br><span class="text-info">{{ auth()->user()->name }}</span>
+                            </p>
+                            <p class="mb-2">Selamat datang,</p>
+                            <p>Harap verifikasi alamat email Anda untuk mengakses aplikasi {{ config('app.name') }}.
+                            </p>
+                            <div class="alert alert-secondary mb-2" role="alert">
+                                <div class="alert-body">
+                                    <small><em>Klik tombol dibawah untuk mengirim ulang link verifikasi
+                                            email.</em></small>
+                                </div>
+                            </div>
                             @if (session('status'))
                                 <div class="alert alert-success" role="alert">
                                     <div class="alert-body">
@@ -62,28 +73,12 @@
                                     </div>
                                 </div>
                             @endif
-                            <form class="auth-forgot-password-form mt-2" action="{{ url('forgot-password') }}"
+                            <form class="form-verify-email" action="{{ url('email/verification-notification') }}"
                                 method="POST">
                                 @csrf
-                                <div class="mb-1">
-                                    <label class="form-label" for="email">Email</label>
-                                    <input class="form-control @error('email') is-invalid @enderror" id="email" type="text"
-                                        name="email" placeholder="example@mail.com" aria-describedby="email" autofocus=""
-                                        tabindex="1" value="{{ old('email') }}" />
-                                    @error('email')
-                                        <small class="invalid-feedback">{{ $message }}</small>
-                                    @enderror
-                                </div>
-                                <button type="submit" class="btn btn-primary w-100" tabindex="2">
-                                    Kirim Link Reset Password
-                                </button>
+                                <button type="submit" class="btn btn-primary w-100" tabindex="4">Kirim Link
+                                    Verifikasi Email</button>
                             </form>
-                            <p class="text-center mt-2">
-                                <a href="{{ url('login') }}">
-                                    <i data-feather="chevron-left"></i>
-                                    Kembali ke Login
-                                </a>
-                            </p>
                         </div>
                     </div>
                 </div>

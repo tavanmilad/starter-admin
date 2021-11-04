@@ -55,8 +55,19 @@
                             <h2 class="card-title fw-bold mb-1">Reset Password 🔒</h2>
                             <p class="card-text mb-2">Password baru Anda harus berbeda dari password yang digunakan
                                 sebelumnya</p>
-                            <form class="auth-reset-password-form mt-2" action="#" method="POST">
+                            <form class="auth-reset-password-form mt-2" action="{{ url('reset-password') }}"
+                                method="POST">
                                 @csrf
+                                <input type="hidden" name="token" value="{{ $request->route('token') }}">
+                                <div class="mb-1">
+                                    <label class="form-label" for="email">Email</label>
+                                    <input class="form-control @error('email') is-invalid @enderror" id="email" type="text"
+                                        name="email" placeholder="example@mail.com" aria-describedby="email" autofocus=""
+                                        tabindex="1" value="{{ $request->email ?? old('email') }}" />
+                                    @error('email')
+                                        <small class="invalid-feedback">{{ $message }}</small>
+                                    @enderror
+                                </div>
                                 <div class="mb-1">
                                     <div class="d-flex justify-content-between">
                                         <label class="form-label" for="password">Password Baru</label>
@@ -65,7 +76,7 @@
                                         <input
                                             class="form-control form-control-merge @error('password') is-invalid @enderror"
                                             id="password" type="password" name="password" placeholder="············"
-                                            aria-describedby="password" autofocus="" tabindex="1" /><span
+                                            aria-describedby="password" autofocus="" tabindex="2" /><span
                                             class="input-group-text cursor-pointer"><i data-feather="eye"></i></span>
                                     </div>
                                     @error('password')
@@ -79,7 +90,7 @@
                                     <div class="input-group input-group-merge form-password-toggle">
                                         <input class="form-control form-control-merge" id="password_confirmation"
                                             type="password" name="password_confirmation" placeholder="············"
-                                            aria-describedby="password_confirmation" tabindex="2" /><span
+                                            aria-describedby="password_confirmation" tabindex="3" /><span
                                             class="input-group-text cursor-pointer"><i data-feather="eye"></i></span>
                                     </div>
                                     @error('password_confirmation')

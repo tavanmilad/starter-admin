@@ -86,28 +86,31 @@
                                     <label class="form-label" for="password">Password</label>
                                     <div class="input-group input-group-merge form-password-toggle">
                                         <input
-                                            class="form-control form-control-merge @error('password') is-invalid @enderror"
+                                            class="form-control @error('password') is-invalid @enderror form-control-merge"
                                             id="password" type="password" name="password" placeholder="············"
                                             aria-describedby="password" tabindex="4" /><span
                                             class="input-group-text cursor-pointer"><i data-feather="eye"></i></span>
                                     </div>
                                     @error('password')
-                                        <small class="invalid-feedback">{{ $message }}</small>
+                                        <small class="text-danger">{{ $message }}</small>
                                     @enderror
                                 </div>
                                 <div class="mb-1">
                                     <label class="form-label" for="password_confirmation">Ulangi Password</label>
-                                    <input class="form-control" id="password_confirmation" type="text"
+                                    <input class="form-control" id="password_confirmation" type="password"
                                         name="password_confirmation" placeholder="············"
                                         aria-describedby="password_confirmation" tabindex="5" />
                                 </div>
                                 <div class="mb-1">
                                     <div class="form-check">
-                                        <input class="form-check-input" id="register-privacy-policy" type="checkbox"
-                                            tabindex="6" />
-                                        <label class="form-check-label" for="register-privacy-policy">I agree to<a
-                                                href="#">&nbsp;privacy policy & terms</a></label>
+                                        <input class="form-check-input" id="terms" type="checkbox" tabindex="6" name="terms"
+                                            value="1" />
+                                        <label class="form-check-label" for="terms">I agree to<a href="#">&nbsp;privacy
+                                                policy & terms</a></label>
                                     </div>
+                                    @error('terms')
+                                        <small class="text-danger">{{ $message }}</small>
+                                    @enderror
                                 </div>
                                 <button type="submit" class="btn btn-primary w-100" tabindex="7">Daftar</button>
                             </form>

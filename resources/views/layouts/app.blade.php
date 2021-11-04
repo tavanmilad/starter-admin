@@ -70,6 +70,7 @@
     <!-- BEGIN Vendor JS-->
 
     <!-- BEGIN: Page Vendor JS-->
+    <script src="{{ asset('') }}app-assets/vendors/js/jquery/jquery.js"></script>
 
     <!-- BEGIN: Theme JS-->
     <script src="{{ asset('') }}app-assets/js/core/app-menu.js"></script>

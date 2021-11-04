@@ -41,7 +41,7 @@
                             </g>
                         </svg>
                     </span>
-                    <h2 class="brand-text">Vuexy</h2>
+                    <h2 class="brand-text">{{ __('Logo') }}</h2>
                 </a>
             </li>
             <li class="nav-item nav-toggle">
@@ -59,18 +59,17 @@
             <li class="{{ Request::is('/') ? 'active' : '' }} nav-item">
                 <a class="d-flex align-items-center" href="{{ url('') }}">
                     <i data-feather="home"></i>
-                    <span class="menu-title text-truncate" data-i18n="Dashboard">Dashboard</span>
-                    {{-- <span class="badge badge-light-warning rounded-pill ms-auto me-1">2</span> --}}
+                    <span class="menu-title text-truncate" data-i18n="{{ __('Home') }}">{{ __('Home') }}</span>
                 </a>
             </li>
             <li class=" navigation-header">
-                <span data-i18n="Master Data">Master Data</span>
+                <span data-i18n="{{ __('Master Data') }}">{{ __('Master Data') }}</span>
                 <i data-feather="more-horizontal"></i>
             </li>
             <li class=" nav-item">
                 <a class="d-flex align-items-center" href="#">
-                    <i data-feather="user"></i>
-                    <span class="menu-title text-truncate" data-i18n="User">User</span>
+                    <i data-feather="users"></i>
+                    <span class="menu-title text-truncate" data-i18n="{{ __('User') }}">{{ __('User') }}</span>
                 </a>
                 <ul class="menu-content">
                     <li>
@@ -94,13 +93,25 @@
                 </ul>
             </li>
             <li class=" navigation-header">
-                <span data-i18n="Menu Utama">Menu Utama</span>
+                <span data-i18n="{{ __('Menu') }}">{{ __('Menu') }}</span>
                 <i data-feather="more-horizontal"></i>
             </li>
-            <li class=" nav-item">
+            <li class="{{ Request::is('chat') ? 'active' : '' }} nav-item">
                 <a class="d-flex align-items-center" href="#">
                     <i data-feather="message-square"></i>
-                    <span class="menu-title text-truncate" data-i18n="Chat">Chat</span>
+                    <span class="menu-title text-truncate" data-i18n="{{ __('Chat') }}">{{ __('Chat') }}</span>
+                    <span class="badge badge-light-warning rounded-pill ms-auto me-0">2</span>
+                </a>
+            </li>
+            <li class=" navigation-header">
+                <span data-i18n="{{ __('Akun') }}">{{ __('Akun') }}</span>
+                <i data-feather="more-horizontal"></i>
+            </li>
+            <li class="{{ Request::is('user/profile') ? 'active' : '' }} nav-item">
+                <a class="d-flex align-items-center" href="{{ url('user/profile') }}">
+                    <i data-feather="settings"></i>
+                    <span class="menu-title text-truncate"
+                        data-i18n="{{ __('Profil') }}">{{ __('Profil') }}</span>
                 </a>
             </li>
         </ul>

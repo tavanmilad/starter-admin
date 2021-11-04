@@ -10,7 +10,7 @@
                         <div class="breadcrumb-wrapper">
                             <ol class="breadcrumb">
                                 <li class="breadcrumb-item">
-                                    <a href="{{ url('') }}">Dashboard</a>
+                                    <a href="{{ url('/') }}">Home</a>
                                 </li>
                                 <li class="breadcrumb-item">
                                     <a href="#">Layouts</a>

@@ -5,10 +5,10 @@ namespace App\Http\Controllers\Application;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
-class DashboardController extends Controller
+class HomeController extends Controller
 {
-    public function index()
+    public function __invoke()
     {
-        return view('app.dashboard.index');
+        return view('app.home');
     }
 }
